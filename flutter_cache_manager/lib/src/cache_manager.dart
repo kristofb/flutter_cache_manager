@@ -210,15 +210,18 @@ class CacheManager implements BaseCacheManager {
     Uint8List fileBytes, {
     String? key,
     String? eTag,
+    String? fileName,
     Duration maxAge = const Duration(days: 30),
     String fileExtension = 'file',
   }) async {
     key ??= url;
     var cacheObject = await _store.retrieveCacheData(key);
+
+    fileName ??= '${const Uuid().v1()}.$fileExtension';
     cacheObject ??= CacheObject(
       url,
       key: key,
-      relativePath: '${const Uuid().v1()}.$fileExtension',
+      relativePath: fileName,
       validTill: DateTime.now().add(maxAge),
     );
 
@@ -246,15 +249,16 @@ class CacheManager implements BaseCacheManager {
     Stream<List<int>> source, {
     String? key,
     String? eTag,
+    String? fileName,
     Duration maxAge = const Duration(days: 30),
     String fileExtension = 'file',
   }) async {
     key ??= url;
     var cacheObject = await _store.retrieveCacheData(key);
+    fileName ??= '${const Uuid().v1()}.$fileExtension';
     cacheObject ??= CacheObject(url,
         key: key,
-        relativePath: '${const Uuid().v1()}'
-            '.$fileExtension',
+        relativePath: fileName,
         validTill: DateTime.now().add(maxAge));
 
     cacheObject = cacheObject.copyWith(
