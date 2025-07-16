@@ -62,6 +62,7 @@ abstract class BaseCacheManager {
     Uint8List fileBytes, {
     String? key,
     String? eTag,
+    String? fileName,
     Duration maxAge = const Duration(days: 30),
     String fileExtension = 'file',
   });
